@@ -17,11 +17,11 @@ class WeatherDetailCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Icon(icon, size: 40, color: color),
-        const SizedBox(height: 8),
+        Icon(icon, size: 24, color: color),
+        const SizedBox(height: 4),
         Text(
           title,
-          style: const TextStyle(fontSize: 14, color: Colors.grey),
+          style: const TextStyle(fontSize: 12, color: Colors.grey),
         ),
         Text(
           value,

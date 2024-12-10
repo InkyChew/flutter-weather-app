@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:weather/location_menu.dart';
 import 'package:weather/weather_detail_card.dart';
 
-class WeatherHomeScreen extends StatelessWidget {
-  
+class WeatherHomeScreen extends StatefulWidget {
   static const weeks = ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
   const WeatherHomeScreen({super.key});
+
+  @override
+  State<WeatherHomeScreen> createState() => _WeatherHomeScreenState();
+}
+
+class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
+  
+  String location = 'Taipei';
+  void setLocation(String? value) {
+    setState(() {
+      if(value != null) location = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Weather'),
+        // title: const Text('Weather'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              // Implement search functionality
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              // Implement settings functionality
-            },
-          ),
+          LocationMenu(location: location, onSelected: setLocation)
         ],
       ),
       body: SingleChildScrollView(
@@ -32,49 +34,35 @@ class WeatherHomeScreen extends StatelessWidget {
           children: [
             // Current Weather Overview
             const Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    // Location
-                    'New York',
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'Current Weather',
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
-                  ),
-                  SizedBox(height: 20),
-                  Row(
+                  const SizedBox(height: 20),
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.wb_sunny, size: 60, color: Colors.orange),
                       SizedBox(width: 10),
                       Text(
-                        '28°C', // Current Temperature
+                        '28°', // Current Temperature
                         style: TextStyle(
                             fontSize: 60, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
-                  Text(
-                    // Weather description
-                    'Clear Skies',
-                    style: TextStyle(fontSize: 24),
-                  ),
-                  SizedBox(height: 20),
-                  Row(
+                  const SizedBox(height: 20),
+                  const Row(
                     // Wind Speed, UV Index, and AQI
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       WeatherDetailCard(
-                        title: 'Wind Speed',
+                        title: 'Wind',
                         value: '15 km/h',
                         icon: Icons.air,
                       ),
                       WeatherDetailCard(
-                        title: 'UV Index',
+                        title: 'UVI',
                         value: 'High',
                         icon: Icons.wb_sunny,
                         color: Colors.red,
@@ -142,13 +130,11 @@ class WeatherHomeScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Column(
-                            children: [
-                              Text(weeks[index]), // Day
-                              const Icon(Icons.cloud, size: 30),
-                              const Text('20-28°C'), // Low - High
-                            ]
-                          ),
+                          child: Column(children: [
+                            Text(WeatherHomeScreen.weeks[index]), // Day
+                            const Icon(Icons.cloud, size: 30),
+                            const Text('20-28°C'), // Low - High
+                          ]),
                         );
                       },
                     ),
