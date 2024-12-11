@@ -34,12 +34,12 @@ class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
           children: [
             // Current Weather Overview
             const Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 20),
-                  const Row(
+                  SizedBox(height: 20),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.wb_sunny, size: 60, color: Colors.orange),
@@ -51,8 +51,8 @@ class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
-                  const Row(
+                  SizedBox(height: 20),
+                  Row(
                     // Wind Speed, UV Index, and AQI
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
