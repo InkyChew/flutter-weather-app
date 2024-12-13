@@ -6,7 +6,6 @@ class LocationMenu extends StatelessWidget {
   static Map<String, String> locations = {
     'Yilan': '宜蘭',
     'Taipei': '台北',
-    'New Taipei': '新北',
     'Keelung': '基隆',
     'Taoyuan': '桃園',
     'Hsinchu': '新竹',
@@ -14,7 +13,6 @@ class LocationMenu extends StatelessWidget {
     'Taichung': '台中',
     'Changhua': '彰化',
     'Nantou': '南投',
-    'Yunlin': '雲林',
     'Chiayi': '嘉義',
     'Tainan': '台南',
     'Kaohsiung': '高雄',

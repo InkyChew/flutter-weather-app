@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather/weather/weather.dart';
-import 'package:weather/weather/widgets/location_menu.dart';
 
 class WeatherPage extends StatelessWidget {
   const WeatherPage({super.key});
@@ -11,7 +10,13 @@ class WeatherPage extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        actions: const [LocationMenu()],
+        title: const LocationMenu(),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 16.0),
+            child: UnitSwitch(),
+          )
+        ],
       ),
       body: Center(
         child: BlocBuilder<WeatherCubit, WeatherState>(
