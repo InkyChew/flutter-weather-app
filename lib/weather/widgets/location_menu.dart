@@ -25,10 +25,14 @@ class LocationMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final location = context.select(
+      (WeatherCubit cubit) => cubit.state.weather.location,
+    );
+
     return DropdownMenu<String>(
       leadingIcon: const Icon(Icons.place),
       trailingIcon: const Icon(null),
-      initialSelection: null,
+      initialSelection: location,
       onSelected: (String? value) async =>
           {await context.read<WeatherCubit>().fetchWeather(value)},
       dropdownMenuEntries: locations.entries.map((entry) {
