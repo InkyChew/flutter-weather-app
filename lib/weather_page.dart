@@ -1,33 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:weather/weather/view/weather_loaded.dart';
-import 'package:weather/widgets/location_menu.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_repo/weather_repo.dart';
+import 'current_weather/current_weather.dart';
 
-class WeatherPage extends StatefulWidget {
-  const WeatherPage({super.key});
-
-  @override
-  State<WeatherPage> createState() => _WeatherPageState();
-}
-
-class _WeatherPageState extends State<WeatherPage> {
-  
-  String location = 'Taipei';
-  void setLocation(String? value) {
-    setState(() {
-      if(value != null) location = value;
-    });
-  }
+class WeatherPage extends StatelessWidget {
+  const WeatherPage({required WeatherRepo weatherRepo, super.key})
+      : _weatherRepo = weatherRepo;
+  final WeatherRepo _weatherRepo;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // title: const Text('Weather'),
-        actions: [
-          LocationMenu(location: location, onSelected: setLocation)
-        ],
-      ),
-      body: const WeatherLoaded(),
+    return BlocProvider(
+      create: (_) => WeatherCubit(_weatherRepo),
+      child: const CurrentWeatherCard(),
     );
   }
 }
