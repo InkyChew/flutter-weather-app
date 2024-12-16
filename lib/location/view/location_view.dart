@@ -20,8 +20,9 @@ class _LocationViewState extends State<LocationView> {
         listener: (context, state) {
           if (state is LocationLoaded) {
             context.read<WeatherCubit>().fetchWeather(
-                  state.position.latitude,
-                  state.position.longitude,
+              24.82963,121.00602
+                  // state.position.latitude,
+                  // state.position.longitude,
                 );
           }
           if (state is LocationError) {

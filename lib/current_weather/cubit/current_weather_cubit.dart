@@ -25,7 +25,9 @@ class WeatherCubit extends HydratedCubit<CurrentWeatherState> {
       emit(
         state.copyWith(
           status: WeatherStatus.success,
-          weather: weather,
+          weather: weather.copyWith(
+            obsTime: weather.obsTime.toLocal()
+          ),
         ),
       );
     } on Exception catch (e) {

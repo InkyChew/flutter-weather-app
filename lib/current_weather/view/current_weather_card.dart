@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather/current_weather/current_weather.dart';
+import 'package:weather/uvIndex/view/uv_index_widget.dart';
 
 class CurrentWeatherCard extends StatelessWidget {
   const CurrentWeatherCard({super.key});
@@ -11,7 +12,8 @@ class CurrentWeatherCard extends StatelessWidget {
       child: BlocBuilder<WeatherCubit, CurrentWeatherState>(
         builder: (context, state) {
           return switch (state.status) {
-            WeatherStatus.initial => const Text("Initial"),
+            WeatherStatus.initial => 
+              CurrentWeatherLoaded(weather: state.weather),
             WeatherStatus.loading => const CircularProgressIndicator(),
             WeatherStatus.failure => const Text("Something went wrong!"),
             WeatherStatus.success =>
@@ -31,12 +33,10 @@ class CurrentWeatherLoaded extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Text("Weather"),
-        Text('${weather.countyName} ${weather.townName}'),
+        Text(weather.countyName),
         Text('${weather.airTemperature}℃'),
         Text(weather.weather),
-        Text('${weather.precipitation}mm'),
-        Text('${weather.uvIndex}'),
+        UvIndexWidget(uvIndex: weather.uvIndex),
         Text('${weather.obsTime}'),
       ]
     );
