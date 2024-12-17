@@ -8,6 +8,14 @@ enum UVIndexLevel {
   missing, color      // -99 (Missing or Abnormal Data)
 }
 
+String getUVIndex(double uvIndex) {
+  switch (uvIndex)  {
+    case > 11 : return '11+';
+    case -99 : return '-';
+  }
+  return '$uvIndex';
+}
+
 UVIndexLevel getUVIndexLevel(double uvIndex) {
   if (uvIndex < 0) {
     return UVIndexLevel.missing; // Handling negative values or abnormal data

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:weather/current_weather/current_weather.dart';
 import 'package:weather/uvIndex/view/uv_index_widget.dart';
 
@@ -11,12 +12,15 @@ class CurrentWeatherCard extends StatelessWidget {
     return BlocBuilder<WeatherCubit, CurrentWeatherState>(
       builder: (context, state) {
         return Card(
-            child: switch (state.status) {
-          WeatherStatus.initial => CurrentWeatherLoaded(weather: state.weather),
-          WeatherStatus.loading => const CircularProgressIndicator(),
-          WeatherStatus.failure => const Text("Something went wrong!"),
-          WeatherStatus.success => CurrentWeatherLoaded(weather: state.weather),
-        });
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: switch (state.status) {
+                        WeatherStatus.initial => CurrentWeatherLoaded(weather: state.weather),
+                        WeatherStatus.loading => const CircularProgressIndicator(),
+                        WeatherStatus.failure => const Text("Something went wrong!"),
+                        WeatherStatus.success => CurrentWeatherLoaded(weather: state.weather),
+                      },
+            ));
       },
     );
   }
@@ -33,7 +37,7 @@ class CurrentWeatherLoaded extends StatelessWidget {
       Text('${weather.airTemperature}℃'),
       Text(weather.weather),
       UvIndexWidget(uvIndex: weather.uvIndex),
-      Text('${weather.obsTime}'),
+      Text(DateFormat('yyyy-MM-dd HH:mm:ss').format(weather.obsTime)),
     ]);
   }
 }

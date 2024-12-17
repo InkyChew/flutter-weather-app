@@ -19,7 +19,7 @@ class UvIndexWidget extends StatelessWidget {
         Positioned(
           top: 10,
           child: Text(
-            '$uvIndex',
+            getUVIndex(uvIndex),
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
