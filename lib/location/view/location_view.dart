@@ -11,40 +11,42 @@ class LocationView extends StatefulWidget {
 }
 
 class _LocationViewState extends State<LocationView> {
+  @override
+  void initState() {
+    context.read<LocationCubit>().getLocation();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LocationCubit(),
-      child: BlocListener<LocationCubit, LocationState>(
-        listener: (context, state) {
+    return BlocListener<LocationCubit, LocationState>(
+      listener: (context, state) {
+        if (state is LocationLoaded) {
+          context.read<WeatherCubit>().fetchWeather(
+                // 24.82963, 121.00602
+                state.position.latitude,
+                state.position.longitude,
+              );
+        }
+        if (state is LocationError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.message)),
+          );
+        }
+      },
+      child: BlocBuilder<LocationCubit, LocationState>(
+        builder: (context, state) {
+          if (state is LocationLoading) {
+            return const CircularProgressIndicator();
+          }
           if (state is LocationLoaded) {
-            context.read<WeatherCubit>().fetchWeather(
-              24.82963,121.00602
-                  // state.position.latitude,
-                  // state.position.longitude,
-                );
+            return Text(
+                '${state.position.latitude}, ${state.position.longitude}');
           }
-          if (state is LocationError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Error: Unable to fetch location')),
-            );
-          }
+          return IconButton(
+              onPressed: () => context.read<LocationCubit>().getLocation(),
+              icon: const Icon(Icons.place));
         },
-        child: BlocBuilder<LocationCubit, LocationState>(
-          builder: (context, state) {
-            if (state is LocationInitial) {
-              return IconButton(onPressed: () => context.read<LocationCubit>().getLocation(), icon: const Icon(Icons.place));
-            }
-            if (state is LocationLoading) {
-              return const CircularProgressIndicator();
-            }
-            if (state is LocationLoaded) {
-              return Text('${state.position.latitude}, ${state.position.longitude}');
-            }
-            return const Text('Location not loaded.');
-          },
-        ),
       ),
     );
   }

@@ -22,20 +22,10 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        theme: ThemeData(
-            appBarTheme: const AppBarTheme(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-            ),
-            colorSchemeSeed: Colors.deepPurple),
-        home: MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (_) => LocationCubit()),
-            BlocProvider(create: (_) => WeatherCubit(WeatherRepo())),
-          ],
-          child: const HomePage(),
-        ));
+    return MultiBlocProvider(providers: [
+      BlocProvider(create: (_) => LocationCubit()),
+      BlocProvider(create: (_) => WeatherCubit(WeatherRepo())),
+    ], child: const HomePage());
   }
 }
 
@@ -44,11 +34,20 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const LocationView(),
-        WeatherPage(weatherRepo: WeatherRepo()),
-      ],
-    );
+    return MaterialApp(
+        theme: ThemeData(
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+            ),
+            colorSchemeSeed: Colors.deepPurple),
+        home: const Scaffold(
+            body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            LocationView(),
+            WeatherPage(),
+          ],
+        )));
   }
 }

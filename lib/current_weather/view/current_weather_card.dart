@@ -8,19 +8,16 @@ class CurrentWeatherCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: BlocBuilder<WeatherCubit, CurrentWeatherState>(
-        builder: (context, state) {
-          return switch (state.status) {
-            WeatherStatus.initial => 
-              CurrentWeatherLoaded(weather: state.weather),
-            WeatherStatus.loading => const CircularProgressIndicator(),
-            WeatherStatus.failure => const Text("Something went wrong!"),
-            WeatherStatus.success =>
-              CurrentWeatherLoaded(weather: state.weather),
-          };
-        },
-      ),
+    return BlocBuilder<WeatherCubit, CurrentWeatherState>(
+      builder: (context, state) {
+        return Card(
+            child: switch (state.status) {
+          WeatherStatus.initial => CurrentWeatherLoaded(weather: state.weather),
+          WeatherStatus.loading => const CircularProgressIndicator(),
+          WeatherStatus.failure => const Text("Something went wrong!"),
+          WeatherStatus.success => CurrentWeatherLoaded(weather: state.weather),
+        });
+      },
     );
   }
 }
@@ -31,14 +28,12 @@ class CurrentWeatherLoaded extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(weather.countyName),
-        Text('${weather.airTemperature}℃'),
-        Text(weather.weather),
-        UvIndexWidget(uvIndex: weather.uvIndex),
-        Text('${weather.obsTime}'),
-      ]
-    );
+    return Column(children: [
+      Text(weather.countyName),
+      Text('${weather.airTemperature}℃'),
+      Text(weather.weather),
+      UvIndexWidget(uvIndex: weather.uvIndex),
+      Text('${weather.obsTime}'),
+    ]);
   }
 }

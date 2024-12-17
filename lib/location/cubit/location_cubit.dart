@@ -17,7 +17,7 @@ class LocationCubit extends Cubit<LocationState> {
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          throw ('Location permissions are denied');
+          throw ('Location permissions are denied.');
         }
       }
 
