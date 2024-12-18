@@ -36,6 +36,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
         theme: ThemeData(
             textTheme: GoogleFonts.aliceTextTheme(),
             appBarTheme: const AppBarTheme(
@@ -44,12 +45,14 @@ class HomePage extends StatelessWidget {
             ),
             colorSchemeSeed: Colors.deepPurple),
         home: const Scaffold(
-            body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            LocationView(),
-            WeatherPage(),
-          ],
+            body: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              LocationView(),
+              WeatherPage(),
+            ],
+          ),
         )));
   }
 }
